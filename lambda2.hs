@@ -1,14 +1,23 @@
-{-# OPTIONS_GHC -Wno-overlapping-patterns #-}
-
 data Term =
     Var Int
     | Abs Term
-    | App Term Term deriving Eq
+    | App Term Term 
+
+instance Eq Term where
+    (==) :: Term -> Term -> Bool
+    (==) (App a b) (App a' b') = a' == a && b' == b
+    (==) (Var a) (Var b) = a == b
+    (==) (Abs a) (Abs b) = a == b 
+    (==) _ _ = False
+
 
 instance Show Term where
   show t = case t of
     Var x     -> show x
-    Abs t1    -> "/" ++ show t1
+    Abs t1    -> case () of
+                _ | t1 == lFalse -> "False"
+                  | t1 == lTrue -> "True"
+                  | otherwise -> "/" ++ show t1
     App t1 t2 -> "(" ++ show t1 ++ " " ++ show t2 ++ ")"
 
 lFalse = Abs (
@@ -20,6 +29,10 @@ lTrue = Abs (
             Abs
             (Var 1)
         )
+
+lLst = lFalse
+
+lFst = lTrue
 
 lIf = Abs ( -- 2
         Abs ( -- 1
@@ -62,12 +75,24 @@ lSucc = Abs ( --n 2
             )
         )
 
+
 lSum = Abs (
         Abs (
             App (Var 0) ( App lSucc (Var 1) )
         )
     )
 
+lPair = Abs (
+        Abs (
+            Abs (
+                App ( App (Var 0) (Var 2) ) (Var 1)
+            )
+        )
+    )
+
+lInfinity = App (Abs (App (Var 0) (Var 0)))
+                (Abs (App (Var 0) (Var 0)))
+            
 
 --shift o termo em d
 shift :: Int -> Term -> Term
@@ -149,5 +174,5 @@ eval :: Term -> Term
 eval t = let res = evalRunNoPrint t
          in maybe t eval res
 
+
 main :: IO ()
-main = print $ eval ( App (App lSum lTwo) lOne )
