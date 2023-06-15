@@ -1,5 +1,5 @@
 
-data Term = 
+data Term =
     Var Int
     | Abs Term
     | App Term Term
@@ -12,19 +12,19 @@ data Term =
 --     App t1 t2 -> "(" ++ show t1 ++ " " ++ show t2 ++ ")"
 
 lFalse = Abs (
-            Abs 
+            Abs
             (Var 0)
         )
 
 lTrue = Abs (
-            Abs 
-            (Var 1) 
+            Abs
+            (Var 1)
         )
 
 lIf = Abs ( -- 2
         Abs ( -- 1
             Abs -- 0
-                (App (App (Var 2) (Var 1)) (Var 0))     
+                (App (App (Var 2) (Var 1)) (Var 0))
         )
     )
 
@@ -53,15 +53,15 @@ lOne = Abs (
     )
 
 lTwo = Abs (
-        Abs(
-            App (Var 1) (App (Var 1) (Var 0)) 
+        Abs (
+            App (Var 1) (App (Var 1) (Var 0))
         )
     )
 
 lSum = Abs (
         Abs (
-            Abs(
-                Abs(
+            Abs (
+                Abs (
                     App
                     (App (Var 3) (Var 1))
                     ( App (App (Var 2) (Var 1)) (Var 0))
@@ -85,7 +85,7 @@ subst :: Int -> Term -> Term -> Term
 subst j s t = walk 0 t
     where walk c t = case t of
                 Var x -> if x == j + c
-                         then shift (c + 1) s 
+                         then shift (c + 1) s
                          else Var x
                 Abs t1 -> Abs (walk (c + 1) t1)
                 App t1 t2 -> App (walk c t1) (walk c t2)
@@ -96,33 +96,44 @@ substTop s t = shift (-1) (subst 0 (shift 1 s) t)
 
 
 isVal :: Term -> Bool
-isVal (Abs _) = False
-isVal _ = True
+isVal (Abs _) = True
+isVal _ = False
 
-evalPrint :: Term -> IO Term
+evalPrint :: Term -> IO (Maybe Term)
 evalPrint t@(App (Abs a) b) | isVal b = do
     print t
-    print "App isval b"
+    print "Reducao beta"
     let y = substTop b a
-    print $ "substutindo b em a = " ++ show y
-    evalPrint y
+    return $ Just y
+
 evalPrint t@(App a b) | isVal a = do
     print t
-    print "App isval a"
     b' <- evalPrint b
-    evalPrint $ App a b'
-evalPrint t@(App a b) = do 
-    print t 
-    print "App generico"
+    return $ b' >>= (Just . App a)
+
+evalPrint t@(App a b) = do
+    print t
     a' <- evalPrint a
-    return $ App a' b
+    return $ a' >>= (Just . (`App` b))
+    
 evalPrint t = do
     print t
     print "Fim"
-    return t 
+    return Nothing
+
+eval :: Term -> IO Term
+eval t = do
+    res <- evalPrint t
+    case res of
+            Just t' -> eval t'
+            Nothing -> return t
 
 -- main :: IO()
 -- main = print $ subst 0 lNot (Abs (App (Var 0) lTrue))
 
-main :: IO Term 
-main = evalPrint $ App (Abs (Abs (App (Var 0) (Var 1)))) (Var 90)
+main :: IO Term
+main = eval $ App (Abs (Abs (App (Var 0) (Var 1)))) (Var 90)
+
+
+-- main :: IO Term 
+-- main = evalPrint $ App (App lOr lTrue) lTrue
