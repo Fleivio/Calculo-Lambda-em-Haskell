@@ -1,15 +1,15 @@
+{-# OPTIONS_GHC -Wno-overlapping-patterns #-}
 
 data Term =
     Var Int
     | Abs Term
     | App Term Term
-        deriving Show
 
--- instance Show Term where
---   show t = case t of
---     Var x     -> show x
---     Abs t1    -> "/" ++ show t1
---     App t1 t2 -> "(" ++ show t1 ++ " " ++ show t2 ++ ")"
+instance Show Term where
+  show t = case t of
+    Var x     -> show x
+    Abs t1    -> "/" ++ show t1
+    App t1 t2 -> "(" ++ show t1 ++ " " ++ show t2 ++ ")"
 
 lFalse = Abs (
             Abs
@@ -97,6 +97,7 @@ substTop s t = shift (-1) (subst 0 (shift 1 s) t)
 
 isVal :: Term -> Bool
 isVal (Abs _) = True
+isVal (Var _) = True
 isVal _ = False
 
 evalPrint :: Term -> IO (Maybe Term)
@@ -109,13 +110,13 @@ evalPrint t@(App (Abs a) b) | isVal b = do
 evalPrint t@(App a b) | isVal a = do
     print t
     b' <- evalPrint b
-    return $ b' >>= (Just . App a)
+    return $ b' >>= (\x -> Just (App a x))
 
 evalPrint t@(App a b) = do
     print t
     a' <- evalPrint a
-    return $ a' >>= (Just . (`App` b))
-    
+    return $ a' >>= (\x -> Just (App x b))
+
 evalPrint t = do
     print t
     print "Fim"
@@ -136,4 +137,4 @@ main = eval $ App (Abs (Abs (App (Var 0) (Var 1)))) (Var 90)
 
 
 -- main :: IO Term 
--- main = evalPrint $ App (App lOr lTrue) lTrue
+-- main = eval $ App (App lOr lTrue) lTrue
