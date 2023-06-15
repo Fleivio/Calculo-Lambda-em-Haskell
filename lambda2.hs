@@ -3,7 +3,7 @@
 data Term =
     Var Int
     | Abs Term
-    | App Term Term
+    | App Term Term deriving Eq
 
 instance Show Term where
   show t = case t of
@@ -52,23 +52,22 @@ lOne = Abs (
         )
     )
 
-lTwo = Abs (
-        Abs (
-            App (Var 1) (App (Var 1) (Var 0))
-        )
-    )
+lTwo = App (App lSum lOne) lOne
 
-lSum = Abs (
-        Abs (
-            Abs (
-                Abs (
-                    App
-                    (App (Var 3) (Var 1))
-                    ( App (App (Var 2) (Var 1)) (Var 0))
+lSucc = Abs ( --n 2
+            Abs ( --s 1
+                Abs ( --z 0
+                    App (Var 1) (App (App (Var 2) (Var 1)) (Var 0))
                 )
             )
         )
+
+lSum = Abs (
+        Abs (
+            App (Var 0) ( App lSucc (Var 1) )
+        )
     )
+
 
 --shift o termo em d
 shift :: Int -> Term -> Term
@@ -91,8 +90,8 @@ subst j s t = walk 0 t
                 App t1 t2 -> App (walk c t1) (walk c t2)
 
 --substitui o termo s em t e deshifta de volta
-substTop :: Term -> Term -> Term
-substTop s t = shift (-1) (subst 0 (shift 1 s) t)
+betaReduct :: Term -> Term -> Term
+betaReduct s t = shift (-1) (subst 0 (shift 0 s) t)
 
 
 isVal :: Term -> Bool
@@ -100,41 +99,55 @@ isVal (Abs _) = True
 isVal (Var _) = True
 isVal _ = False
 
-evalPrint :: Term -> IO (Maybe Term)
-evalPrint t@(App (Abs a) b) | isVal b = do
+hasApp :: Term -> Bool
+hasApp (App _ _) = True
+hasApp (Var _) = False
+hasApp (Abs t) = hasApp t
+
+evalRunPrint :: Term -> IO (Maybe Term)
+evalRunPrint t@(App (Abs a) b) | isVal b = do
     print t
     print "Reducao beta"
-    let y = substTop b a
+    let y = betaReduct b a
     return $ Just y
 
-evalPrint t@(App a b) | isVal a = do
+evalRunPrint t@(App a b) | isVal a = do
     print t
-    b' <- evalPrint b
+    b' <- evalRunPrint b
     return $ b' >>= (\x -> Just (App a x))
 
-evalPrint t@(App a b) = do
+evalRunPrint t@(App a b) = do
     print t
-    a' <- evalPrint a
+    a' <- evalRunPrint a
     return $ a' >>= (\x -> Just (App x b))
 
-evalPrint t = do
+evalRunPrint t@(Abs a) | hasApp a = do
+    print t
+    a' <- evalRunPrint a
+    return $ a' >>= Just . Abs
+
+evalRunPrint t = do
     print t
     print "Fim"
     return Nothing
 
-eval :: Term -> IO Term
-eval t = do
-    res <- evalPrint t
+evalRunNoPrint :: Term -> Maybe Term
+evalRunNoPrint t@(App (Abs a) b) | isVal b = Just $ betaReduct b a
+evalRunNoPrint t@(App a b) | isVal a = evalRunNoPrint b >>= (Just . App a)
+evalRunNoPrint t@(App a b) = evalRunNoPrint a >>= (\x -> Just (App x b))
+evalRunNoPrint t@(Abs a) | hasApp a = evalRunNoPrint a >>= Just . Abs
+evalRunNoPrint t = Nothing
+
+evalPrint :: Term -> IO Term
+evalPrint t = do
+    res <- evalRunPrint t
     case res of
-            Just t' -> eval t'
+            Just t' -> evalPrint t'
             Nothing -> return t
 
--- main :: IO()
--- main = print $ subst 0 lNot (Abs (App (Var 0) lTrue))
+eval :: Term -> Term
+eval t = let res = evalRunNoPrint t
+         in maybe t eval res
 
-main :: IO Term
-main = eval $ App (Abs (Abs (App (Var 0) (Var 1)))) (Var 90)
-
-
--- main :: IO Term 
--- main = eval $ App (App lOr lTrue) lTrue
+main :: IO ()
+main = print $ eval ( App (App lSum lTwo) lOne )
