@@ -60,7 +60,7 @@ lOr = Abs (  -- 1
         )
     )
 
-lZero = lNot
+lZero = lFalse
 
 lOne = Abs ( -- f
         Abs ( -- z
