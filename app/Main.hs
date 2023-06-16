@@ -1,6 +1,6 @@
 module Main (main) where
 
-import Lambda
+import Term
 
 main :: IO ()
 main = print runTests

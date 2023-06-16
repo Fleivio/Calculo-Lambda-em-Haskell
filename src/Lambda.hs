@@ -1,6 +1,22 @@
-module Lambda(Term (..), eval, runTests, evalPrint ) where
+module Lambda(Term (..), eval, evalPrint ) where
 
-import Term
+data Term =
+    Var Int
+    | Abs Term
+    | App Term Term
+
+instance Eq Term where
+    (==) (App a b) (App a' b') = a' == a && b' == b
+    (==) (Var a) (Var b) = a == b
+    (==) (Abs a) (Abs b) = a == b
+    (==) _ _ = False
+
+instance Show Term where
+  show t = case t of
+    Var x     -> show x
+    Abs t1    -> "/" ++ show t1
+    App t1 t2 -> "(" ++ show t1 ++ " " ++ show t2 ++ ")"
+
 
 --shift o termo em d
 shift :: Int -> Term -> Term
@@ -65,19 +81,3 @@ eval x
     | otherwise = eval y
     where y = evalRun x
 
-tests :: [(Term, Term)]
-tests = [
-    (App (App lSum lOne) lOne, lTwo),
-    (App (App lSum lOne) lTwo, App (App lSum lTwo) lOne),
-    (App lSucc lZero, lOne),
-    (App lSucc lOne, lTwo),
-    (App (App lOr lTrue) lFalse, lTrue),
-    (App (App lOr lFalse) lTrue, lTrue),
-    (App (App lOr lFalse) lFalse, lFalse),
-    (App (App lOr lTrue) lTrue, lTrue)
-    ]
-
-runTests :: Bool
-runTests = and $ app tests
-    where
-        app = map (\(x, y) -> eval x == eval y)
