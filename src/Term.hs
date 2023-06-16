@@ -1,10 +1,14 @@
-module Term (lFalse, lTrue, lAnd, lOr, lIf, lNot,
-                       lPair, lFst, lLst, 
-                       lInfinity,
-                       lSucc, lSum, lZero, lOne, lTwo,
-                       runTests) where
+module Term (lFalse, lTrue, lAnd, lOr, lIf, lNot, lId,
+                       lPair, lFst, lLst,
+                       lIsZro, lEqual, lPred, lSucc,
+                       lSum, lMult, lPow,  lSub, 
+                       lZero, lOne, lTwo, lThree,
+                       runTests, singleTest) where
 
 import Lambda ( Term(..), eval )
+
+lId ::Term
+lId = Abs (Var 0)
 
 lFalse :: Term
 lFalse = Abs ( -- 1
@@ -18,10 +22,14 @@ lTrue = Abs (
         )
 
 lLst :: Term
-lLst = lFalse
+lLst = Abs (
+        App (Var 0) lFalse
+    )
 
 lFst :: Term
-lFst = lTrue
+lFst = Abs (
+        App (Var 0) lTrue
+    )
 
 lIf :: Term
 lIf = Abs ( -- 2
@@ -61,8 +69,18 @@ lOne = Abs ( -- f
     )
 
 lTwo :: Term
-lTwo = App (App lSum lOne) lOne
+lTwo = Abs (
+        Abs (
+            App (Var 1) (App (Var 1) (Var 0))
+        )
+    )
 
+lThree :: Term
+lThree = Abs (
+        Abs (
+            App (Var 1) ( App (Var 1) (App (Var 1) (Var 0)))
+        )
+    )
 
 lSum :: Term
 lSum = Abs ( --3 n2
@@ -90,29 +108,86 @@ lPair :: Term
 lPair = Abs (
         Abs (
             Abs (
-                App ( App (Var 0) (Var 2) ) (Var 1)
+                App (App (Var 0) (Var 2)) (Var 1) 
             )
         )
     )
 
-lInfinity :: Term
-lInfinity = App (Abs (App (Var 0) (Var 0)))
-                (Abs (App (Var 0) (Var 0)))
+lMult :: Term
+lMult = Abs (
+        Abs (
+            Abs (
+                App (Var 2) (App (Var 1) (Var 0))
+            )
+        )
+    )
+
+lPow :: Term
+lPow = Abs ( -- f
+        Abs ( -- z
+            App (Var 1) (Var 0)
+        )
+    )
+
+_zz :: Term 
+_zz = App (App lPair lZero) lZero
+
+_ss :: Term
+_ss = Abs ( App 
+                (App lPair (App lLst (Var 0)))
+                (App lSucc (App lLst (Var 0) ))
+        )
+
+lPred :: Term
+lPred = Abs (
+            App lFst (App (App (Var 0) _ss) _zz) 
+    )
+
+lSub :: Term
+lSub = Abs (
+        Abs (
+            App (App (Var 0) lPred) (Var 1) 
+        )
+    )
+
+lIsZro :: Term
+lIsZro = Abs (
+        App (App (Var 0) (Abs lFalse)) lTrue
+    )
+
+
+-- lInfinity :: Term
+-- lInfinity = App (Abs (App (Var 0) (Var 0)))
+--                 (Abs (App (Var 0) (Var 0)))
  
+lEqual :: Term
+lEqual = Abs (
+        Abs(
+            App lIsZro (App (App lSub (Var 0)) (Var 1))
+        )
+    )
+
+-- lFixPoint :: Term
+-- lFixPoint = Abs ( App
+--                 Abs ( App (Var 1)
+--                                  (Abs (App (App (Var 1) (Var 1)) (Var 0))) )
+--                 Abs ( App (Var 1) 
+--                                  (Abs (App (App (Var 1) (Var 1)) (Var 0))) )
+--             )
 
 tests :: [(Term, Term)]
 tests = [
-    (App (App lSum lOne) lOne, lTwo),
-    (App (App lSum lOne) lTwo, App (App lSum lTwo) lOne),
-    (App lSucc lZero, lOne),
-    (App lSucc lOne, lTwo),
-    (App (App lOr lTrue) lFalse, lTrue),
-    (App (App lOr lFalse) lTrue, lTrue),
-    (App (App lOr lFalse) lFalse, lFalse),
-    (App (App lOr lTrue) lTrue, lTrue)
+    (App (App lMult lOne) lOne, lOne),
+    (App (App lMult lOne) lTwo, lTwo),
+    (App (App lMult lOne) lTwo, App (App lMult lTwo) lOne),
+    (App (App lMult lZero) lOne, lZero)
     ]
 
 runTests :: Bool
 runTests = and $ app tests
     where
         app = map (\(x, y) -> eval x == eval y)
+
+
+singleTest :: IO()
+singleTest = print $ eval lOne
