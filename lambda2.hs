@@ -1,15 +1,19 @@
 data Term =
     Var Int
     | Abs Term
-    | App Term Term 
+    | App Term Term
 
 instance Eq Term where
     (==) :: Term -> Term -> Bool
     (==) (App a b) (App a' b') = a' == a && b' == b
     (==) (Var a) (Var b) = a == b
-    (==) (Abs a) (Abs b) = a == b 
+    (==) (Abs a) (Abs b) = a == b
     (==) _ _ = False
 
+-- instance (Semigroup a) => Semigroup (Maybe a) where
+--     (<>) (Just a) (Just b) = Just (a <> b)
+--     (<>) Nothing (Just a) = Just a
+--     (<>) (Just a) Nothing = Just a
 
 instance Show Term where
   show t = case t of
@@ -20,10 +24,9 @@ instance Show Term where
                   | otherwise -> "/" ++ show t1
     App t1 t2 -> "(" ++ show t1 ++ " " ++ show t2 ++ ")"
 
-lFalse = Abs (
-            Abs
-            (Var 0)
-        )
+lFalse = Abs ( -- 1
+            Abs -- 0 
+            (Var 0))
 
 lTrue = Abs (
             Abs
@@ -59,26 +62,24 @@ lOr = Abs (  -- 1
 
 lZero = lNot
 
-lOne = Abs (
-        Abs (
+lOne = Abs ( -- f
+        Abs ( -- z
             App (Var 1) (Var 0)
         )
     )
 
 lTwo = App (App lSum lOne) lOne
 
-lSucc = Abs ( --n 2
-            Abs ( --s 1
-                Abs ( --z 0
-                    App (Var 1) (App (App (Var 2) (Var 1)) (Var 0))
+
+lSum = Abs ( --3 n2
+        Abs ( --2 n1
+            Abs ( --1 succ
+                Abs ( --0 zero
+                    App
+                    (App (Var 3) (Var 1))
+                    (App (App (Var 2) (Var 1)) (Var 0))
                 )
             )
-        )
-
-
-lSum = Abs (
-        Abs (
-            App (Var 0) ( App lSucc (Var 1) )
         )
     )
 
@@ -92,7 +93,7 @@ lPair = Abs (
 
 lInfinity = App (Abs (App (Var 0) (Var 0)))
                 (Abs (App (Var 0) (Var 0)))
-            
+
 
 --shift o termo em d
 shift :: Int -> Term -> Term
@@ -122,57 +123,66 @@ betaReduct s t = shift (-1) (subst 0 (shift 0 s) t)
 isVal :: Term -> Bool
 isVal (Abs _) = True
 isVal (Var _) = True
-isVal _ = False
+isVal _ = True
 
 hasApp :: Term -> Bool
 hasApp (App _ _) = True
 hasApp (Var _) = False
 hasApp (Abs t) = hasApp t
 
-evalRunPrint :: Term -> IO (Maybe Term)
-evalRunPrint t@(App (Abs a) b) | isVal b = do
+evalRunPrint :: Term -> IO Term
+evalRunPrint t@(App (Abs a) b) = do
     print t
-    print "Reducao beta"
-    let y = betaReduct b a
-    return $ Just y
-
-evalRunPrint t@(App a b) | isVal a = do
-    print t
-    b' <- evalRunPrint b
-    return $ b' >>= (\x -> Just (App a x))
-
+    print "Beta Reduction"
+    return $ betaReduct b a
 evalRunPrint t@(App a b) = do
     print t
+    print "Intenal Eval"
     a' <- evalRunPrint a
-    return $ a' >>= (\x -> Just (App x b))
-
-evalRunPrint t@(Abs a) | hasApp a = do
+    b' <- evalRunPrint b
+    return $ App a' b'
+evalRunPrint t@(Abs a) = do
     print t
+    print "Internal Eval"
     a' <- evalRunPrint a
-    return $ a' >>= Just . Abs
-
-evalRunPrint t = do
+    return $ Abs a'
+evalRunPrint t@(Var a) = do
     print t
-    print "Fim"
-    return Nothing
-
-evalRunNoPrint :: Term -> Maybe Term
-evalRunNoPrint t@(App (Abs a) b) | isVal b = Just $ betaReduct b a
-evalRunNoPrint t@(App a b) | isVal a = evalRunNoPrint b >>= (Just . App a)
-evalRunNoPrint t@(App a b) = evalRunNoPrint a >>= (\x -> Just (App x b))
-evalRunNoPrint t@(Abs a) | hasApp a = evalRunNoPrint a >>= Just . Abs
-evalRunNoPrint t = Nothing
+    return $ Var a
 
 evalPrint :: Term -> IO Term
-evalPrint t = do
-    res <- evalRunPrint t
-    case res of
-            Just t' -> evalPrint t'
-            Nothing -> return t
+evalPrint t = run t
+    where run n = do
+            n' <- evalRunPrint n
+            if n == n' then return n
+            else run n'
+
+evalRun :: Term -> Term
+evalRun (App (Abs a) b) = betaReduct b a
+evalRun (App a b) = App (evalRun a) (evalRun b)
+evalRun (Abs a) = Abs (evalRun a)
+evalRun (Var a) = Var a
 
 eval :: Term -> Term
-eval t = let res = evalRunNoPrint t
-         in maybe t eval res
+eval x
+    | x == y = x
+    | otherwise = eval y
+    where y = evalRun x
 
+tests = [
+    (App (App lSum lOne) lOne, lTwo),
+    (App (App lSum lOne) lTwo, App (App lSum lTwo) lOne),
+    (App (App lOr lTrue) lFalse, lTrue),
+    (App (App lOr lFalse) lTrue, lTrue),
+    (App (App lOr lFalse) lFalse, lFalse),
+    (App (App lOr lTrue) lTrue, lTrue),
+    (App (App lOr lTrue) lTrue, lTrue)
+    ]
+
+runTests :: [(Term, Term)] -> Bool
+runTests tests = and $ app tests
+    where
+        app = map (\(x, y) -> eval x == eval y)
 
 main :: IO ()
+main = print $ runTests tests
