@@ -1,6 +1,12 @@
 module Main (main) where
 
-import Term
+import Expr
+
+test :: Expr
+test = Mult (Sum (Number 3) (Def "func")) (Number 10)
+
+vart :: VarTable
+vart = [("func", Let "x" (Number 3) (Pow (Number 2) (Def "x")))]
 
 main :: IO ()
-main = singleTest
+main = print $ evalExpr test vart
