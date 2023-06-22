@@ -15,10 +15,10 @@ import Expr
 -- ltestApply = Apply ltest (Number 3)
 
 test :: Expr
-test = Apply ( Apply (Def "myFunc") (Number 3) ) (Number 4)
+test = Apply (Def "myFunc") (Number 3) 
 
 vart :: VarTable
-vart = [("myFunc", Lamb ["x", "y"] (Op Sum (Def "x") (Def "y")))]
+vart = [("myFunc", Lamb ["x"] (Op Sum (Def "x") (Number 3)))]
 
 main :: IO ()
 main = print $ evalExpr test vart

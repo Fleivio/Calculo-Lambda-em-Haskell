@@ -1,4 +1,4 @@
-module Converter (termToNum, sumToTerm, subToTerm, multToTerm, powToTerm, numToTerm) where
+module Converter (termToNum, sumToTerm, subToTerm, multToTerm, powToTerm, numToTerm, appToTerm) where
 
 import Lambda.Lambda
 import Lambda.BaseTypes
@@ -30,6 +30,6 @@ termToNum x
     | x == lZero = Just 0
     | x == lOne || x == lId = Just 1
 termToNum (App (Var 1) (Var 0)) = Just 1
-termToNum (App a b) = termToNum b >>= (\x -> Just (x+1))
-termToNum (Abs (Abs (App a b))) = termToNum b >>= (\x -> Just (x+1)) 
+termToNum (App _ b) = termToNum b >>= (\x -> Just (x+1))
+termToNum (Abs (Abs (App _ b))) = termToNum b >>= (\x -> Just (x+1)) 
 termToNum _ = Nothing
