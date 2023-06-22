@@ -1,4 +1,5 @@
-module Lambda.Lambda(Term (..), VarTable, Op (..), defToTerm, betaReduct) where
+module Lambda.Lambda(Term (..), VarTable, Op (..), UnOp(..), defToTerm, betaReduct,
+                    appOpTerm, appUnOpTerm) where
 
 type VarName = String
 
@@ -11,24 +12,46 @@ data Term =
     | Number Int
     | Boolean Bool
     | Op Term Op Term
+    | UnOp UnOp Term
     deriving (Eq)
 
-data Op = Add | Sub | Mul | Pow | And | Or | Not | Eq 
-    deriving (Eq, Show)
+data Op = Add | Sub | Mul | Pow | And | Or | Eq | Diff
+    deriving Eq
+
+data UnOp = Not | Succ | Pred | IsZero
+    deriving Eq 
 
 type VarTable = [(VarName, Term)]
 
 instance Show Term where
   show t = case t of
-    Var x     -> "v" ++ show x
-    Abs t1    -> "/" ++ show t1
-    App t1 t2 -> "(" ++ show t1 ++ " " ++ show t2 ++ ")"
-    Lam xs t1 -> "(\\" ++ show xs ++ " -> " ++ show t1 ++ ")"
-    Def s     -> s
-    Number n  -> show n
-    Boolean b -> show b
+    Var x       -> "v" ++ show x
+    Abs t1      -> "/" ++ show t1
+    App t1 t2   -> "(" ++ show t1 ++ " " ++ show t2 ++ ")"
+    Lam xs t1   -> "(\\" ++ show xs ++ " -> " ++ show t1 ++ ")"
+    Def s       -> s
+    Number n    -> show n
+    Boolean b   -> show b
     Op t1 op t2 -> "(" ++ show t1 ++ " " ++ show op ++ " " ++ show t2 ++ ")"
+    UnOp op t1  -> "(" ++ show op ++ " " ++ show t1 ++ ")"
 
+instance Show Op where 
+    show op = case op of
+        Add -> "+"
+        Sub -> "-"
+        Mul -> "*"
+        Pow -> "^"
+        And -> "&&"
+        Or  -> "||"
+        Eq  -> "=="
+        Diff-> "!="
+
+instance Show UnOp where
+    show op = case op of
+        Not    -> "!"
+        Succ   -> "++"
+        Pred   -> "--"
+        IsZero -> "0 =="
 
 lookupVar :: VarName -> VarTable -> Maybe Term
 lookupVar s vt = case vt of
@@ -63,4 +86,8 @@ subst j s = walk 0
 betaReduct :: Term -> Term -> Term
 betaReduct s t = shift (-1) (subst 0 (shift 0 s) t)
 
-    
+appOpTerm :: Term -> Term -> Term -> Term 
+appOpTerm op t1 t2 = App (App op t1) t2
+
+appUnOpTerm :: Term -> Term -> Term
+appUnOpTerm op t = App op t

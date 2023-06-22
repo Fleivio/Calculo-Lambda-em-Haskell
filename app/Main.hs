@@ -4,10 +4,10 @@ import Lambda.Lambda
 import Lambda.Evaluator
 
 test :: Term
-test = Op (Number 1) Eq (Number 2)
+test = Op (Number 2) Diff (App (Def "sum 2") (Number 1))
 
 vart :: VarTable
-vart = [("soma", Lam ["x", "y"] (Op (Def "x") Add (Def "y")))]
+vart = [("sum 2", Lam ["x"] (Op (Def "x") Add (Number 2)))]
 
 main :: IO ()
-main = print $ evalTerm test vart
+main = (print test) >> print (evalTerm test vart)

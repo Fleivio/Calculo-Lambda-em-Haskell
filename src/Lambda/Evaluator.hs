@@ -9,25 +9,35 @@ numToTerm 0 = lZero
 numToTerm n = App lSucc (numToTerm (n-1))
 
 boolToTerm :: Bool -> Term
-boolToTerm True = lTrue
+boolToTerm True  = lTrue
 boolToTerm False = lFalse
 
-opToTerm :: Op -> Term 
-opToTerm Add = lSum
-opToTerm Sub = lSub
-opToTerm Mul = lMult
-opToTerm Pow = lPow
-opToTerm Or = lOr
-opToTerm And = lAnd
-opToTerm Not = lNot
-opToTerm Eq = lEqual
+opToTerm :: Op -> Term -> Term -> Term 
+opToTerm op a b = case op of
+    Add  -> appOpTerm lSum a b
+    Sub  -> appOpTerm lSub a b
+    Mul  -> appOpTerm lMult a b
+    Pow  -> appOpTerm lPow a b
+    Or   -> appOpTerm lOr a b
+    And  -> appOpTerm lAnd a b
+    Eq   -> appOpTerm lEqual a b
+    Diff -> UnOp Not (appOpTerm lEqual a b) 
+
+unOpToTerm :: UnOp -> Term -> Term
+unOpToTerm op a = case op of
+    Not    -> appUnOpTerm lNot a
+    Succ   -> appUnOpTerm lSucc a
+    Pred   -> appUnOpTerm lPred a
+    IsZero -> appUnOpTerm lIsZro a
 
 needTransform :: Term -> Bool
-needTransform (Number _) = True
-needTransform (Boolean _) = True
-needTransform (Def _) = True
-needTransform (Op _ _ _) = True
-needTransform _ = False
+needTransform t = case t of
+    (Number _)  -> True
+    (Boolean _) -> True
+    (Def _)     -> True
+    (Op _ _ _)  -> True
+    (UnOp _ _)  -> True
+    _           -> False
 
 termToInt :: Term -> Maybe Int
 termToInt (Number n) = return n
@@ -52,7 +62,8 @@ evalRun (Lam xs t)      vt = Lam xs (evalRun t vt)
 evalRun (Def s)         vt = defToTerm s vt
 evalRun (Number n)      _  = numToTerm n
 evalRun (Boolean b)     _  = boolToTerm b
-evalRun (Op t1 op t2)   vt = App (App (opToTerm op) (evalRun t1 vt)) (evalRun t2 vt)
+evalRun (Op t1 op t2)   vt = opToTerm op (evalRun t1 vt) (evalRun t2 vt)
+evalRun (UnOp op t1)    vt = unOpToTerm op (evalRun t1 vt)
 evalRun t _ = t
 
 evalTerm :: Term -> VarTable -> Term
