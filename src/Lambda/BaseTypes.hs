@@ -2,10 +2,10 @@ module Lambda.BaseTypes (lFalse, lTrue, lAnd, lOr, lIf, lNot, lId,
                        lPair, lFst, lLst,
                        lIsZro, lEqual, lPred, lSucc,
                        lSum, lMult, lPow,  lSub, 
-                       lZero, lOne, lTwo, lThree,
-                       runTests, singleTest) where
+                       lZero, lOne, lTwo, lThree
+                       ) where
 
-import Lambda.Lambda ( Term(..), evalTerm )
+import Lambda.Lambda ( Term(..))
 
 lId ::Term
 lId = Abs (Var 0)
@@ -162,24 +162,3 @@ lEqual = Abs (
             App lIsZro (App (App lSub (Var 0)) (Var 1))
         )
     )
-
-tests :: [(Term, Term)]
-tests = [
-    (App (App lMult lOne) lOne, lOne),
-    (App (App lMult lOne) lTwo, lTwo),
-    (App (App lMult lOne) lTwo, App (App lMult lTwo) lOne),
-    (App (App lMult lZero) lOne, lZero),
-    (App lIsZro lZero, lTrue),
-    (App lIsZro lOne, lFalse),
-    (App (App lEqual lZero) lZero, lTrue),
-    (App (App lEqual lZero) lOne, lFalse)
-    ]
-
-runTests :: Bool
-runTests = and $ app tests
-    where
-        app = map (\(x, y) -> evalTerm x == evalTerm y)
-
-
-singleTest :: IO()
-singleTest = print $ evalTerm lOne

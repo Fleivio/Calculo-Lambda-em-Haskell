@@ -25,9 +25,8 @@ source-repository head
 
 library
   exposed-modules:
-      Converter
-      Expr
       Lambda.BaseTypes
+      Lambda.Evaluator
       Lambda.Lambda
   other-modules:
       Paths_lambda

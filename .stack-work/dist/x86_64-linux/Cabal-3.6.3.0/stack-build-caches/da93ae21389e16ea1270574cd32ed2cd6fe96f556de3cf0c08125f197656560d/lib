@@ -9,16 +9,14 @@
 /home/severino/Desktop/lambda/README.md:
   hash: 06f4a13d7e506f10f742c8e750c9419c0167ff64521d35625527e5907ea4e42f
 /home/severino/Desktop/lambda/lambda.cabal:
-  hash: 3ebdda078777c04b6227d3dc9caf7e9ac0e2a2326dbd995d5b0b2bd23b4a0ce4
+  hash: 7306f3a2c7ff219f21af75b50ddbf3e3601109f2e7ae30c36d18b1fbe3d3e5e2
 /home/severino/Desktop/lambda/package.yaml:
   hash: 11bb214224b0dcb619323f9826b16d33d3ceca70cffb83b3eb37bf6d0690e5a9
-/home/severino/Desktop/lambda/src/Converter.hs:
-  hash: a4328ae938936d240aab46f0c10c955ad39bce6594701e27fdfceea1bb4c4c61
-/home/severino/Desktop/lambda/src/Expr.hs:
-  hash: 926117add7ba079bc2ae73f17ff95289232e7e2a4d7b0f144d9ec3059d3484d4
 /home/severino/Desktop/lambda/src/Lambda/BaseTypes.hs:
-  hash: 8c300c2945e4e29affa2d46a570c72545abbc9151546c8ec956383a8819aa498
+  hash: 38e8751408975f3d5ff4d68e65a53446a892d9d975f820ed5ce5da53e5579da8
+/home/severino/Desktop/lambda/src/Lambda/Evaluator.hs:
+  hash: 9d64b1a81c750f007da2562c1e6c8bc349bef9c474ab765200c4a36062fefeeb
 /home/severino/Desktop/lambda/src/Lambda/Lambda.hs:
-  hash: 2129473a40d0d70bbca945f60915eabfe297ee56fefc89ceb61b05e86cd00a1f
+  hash: e1beaca8858e74639d1816ab42b8e52b2e9dbf1aa4399bd19ba8429609960fff
 /usr/include/stdc-predef.h:
   hash: cb08cd5d4cc059a90833ac48a284d25016e8d56ded8ad4cd98d8ac59cc5053f3
