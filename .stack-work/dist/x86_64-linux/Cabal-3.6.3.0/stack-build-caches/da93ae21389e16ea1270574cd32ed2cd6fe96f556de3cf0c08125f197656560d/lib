@@ -9,20 +9,24 @@
 /home/severino/Desktop/lambda/README.md:
   hash: 06f4a13d7e506f10f742c8e750c9419c0167ff64521d35625527e5907ea4e42f
 /home/severino/Desktop/lambda/lambda.cabal:
-  hash: 2a9606a392b9babf05135ce19cedc4fc762ae5ffabb2928e8c4ac60b506da10a
+  hash: 31ad95562b76f0669d041199f77cad9f936fd77f2ccc44c1c23f0b2fa3c6685a
 /home/severino/Desktop/lambda/package.yaml:
   hash: 11f1c8c5b368d3e46acd4099fafbc0ba69468b1779c8b438e96a13b1ba2c30b0
+/home/severino/Desktop/lambda/src/Error/Evaluation.hs:
+  hash: d661fb395760c77a4923c6bdb2c42a89b47884830e5bbcee117b54022e914ce8
 /home/severino/Desktop/lambda/src/Lambda/BaseTypes.hs:
   hash: b4e85d7c6e87813a3a9302cebc43d0b45ef55c11c23c6160a5454722d5164f3b
 /home/severino/Desktop/lambda/src/Lambda/Interpreter.hs:
-  hash: ae35562f43b7d102829f4e9aa5918e2c44fc8af5424c078fce34011e97f9374b
+  hash: 8306858eb2d0a7b53667861934d101364f9d1e23b0ef0f8bd1c816e3fe1887fe
 /home/severino/Desktop/lambda/src/Lambda/Lambda.hs:
-  hash: c08991ad97d24640891240f661375d2bbc759d81b29a5862e6959aada91610d4
+  hash: f3ab658f6f5d271311c0f1046c2d4e27e7169971c6ce17f83f82fe558be318ab
 /home/severino/Desktop/lambda/src/Lexer/Lexer.hs:
-  hash: 09160c2142bb2865124a97a505961d16464b477f8bfc7a98facea7cfeb4dda52
+  hash: 5e0909006b44bb6c44f588bdc96a5f2c1c7c9d19e54984d91a2bf69d91274412
 /home/severino/Desktop/lambda/src/Lexer/Token.hs:
-  hash: b688edf9d96468ac6f8b822083dd3939c2565509a9a4adb3297c423c1a90d1cc
-/home/severino/Desktop/lambda/src/Parser.y:
-  hash: 2a6c5863b7a0daf006d6218c7a1177c51bb7843468f95c9a5e83ba8ff1835780
+  hash: 1b36b3b56e11b86c13fdb148cdae2bd226c2f49b93123a741ea9a854fe54d2a3
+/home/severino/Desktop/lambda/src/Parser/Parser.y:
+  hash: a23a073a665f1b7b6b63691f369900751e704062a3bfb3aaa1835234cf7d1317
+/home/severino/Desktop/lambda/src/Runner.hs:
+  hash: 037d73a858c7cf0546c2832a43fcd56ed5698b34151e4b20d2204c54a5d0e37b
 /usr/include/stdc-predef.h:
   hash: cb08cd5d4cc059a90833ac48a284d25016e8d56ded8ad4cd98d8ac59cc5053f3

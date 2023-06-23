@@ -14,6 +14,7 @@ data Term =
     | Op Term Op Term
     | UnOp UnOp Term
     | If Term Term Term
+    | Let VarTable Term
     deriving (Eq)
 
 data Op = Add | Sub | Mul | Pow |
@@ -38,6 +39,7 @@ instance Show Term where
     Op t1 op t2 -> "(" ++ show t1 ++ " " ++ show op ++ " " ++ show t2 ++ ")"
     UnOp op t1  -> "(" ++ show op ++ " " ++ show t1 ++ ")"
     If t1 t2 t3 -> "(if " ++ show t1 ++ " then " ++ show t2 ++ " else " ++ show t3 ++ ")"
+    Let vt t1   -> "(let " ++ show vt ++ " in " ++ show t1 ++ ")"
 
 instance Show Op where 
     show op = case op of

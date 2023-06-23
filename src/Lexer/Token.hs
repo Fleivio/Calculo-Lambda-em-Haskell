@@ -9,6 +9,14 @@ data Token =
     | TThen
     | TElse
 
+    | TLet 
+    | TAssign
+    | TIn
+
+    | TLamb
+    | TComma
+    | TDot
+
     | TTrue
     | TFalse
     | TNot

@@ -25,12 +25,14 @@ source-repository head
 
 library
   exposed-modules:
+      Error.Evaluation
       Lambda.BaseTypes
       Lambda.Interpreter
       Lambda.Lambda
       Lexer.Lexer
       Lexer.Token
-      Parser
+      Parser.Parser
+      Runner
   other-modules:
       Paths_lambda
   hs-source-dirs:

@@ -2,11 +2,17 @@ module Lexer.Lexer(lxRun) where
 
 import Lexer.Token
 import qualified Data.Char as DT (isDigit, isAlpha)
+import Error.Evaluation
 
+ignore :: Char -> Bool
+ignore ' '  = True
+ignore '\n' = True
+ignore '\t' = True
+ignore _    = False
 
-lxRun :: String -> Maybe [Token]
-lxRun [] = Just []
-lxRun (' ':xs) = lxRun xs
+lxRun :: String -> Evaluation [Token]
+lxRun [] = Ok []
+lxRun (x:xs) | ignore x = lxRun xs
 
 -- Names and numbers
 lxRun (x:xs) | DT.isDigit x = lexNumber (x:xs)
@@ -27,24 +33,32 @@ lxRun ('!':xs)     = (TNot:) <$> lxRun xs
 lxRun ('&':xs)     = (TAnd:) <$> lxRun xs
 lxRun ('|':'|':xs) = (TOr:)  <$> lxRun xs
 lxRun ('^':xs)     = (TXor:) <$> lxRun xs
+lxRun ('=':xs)     = (TAssign:) <$> lxRun xs
 
 -- Parenthesis
 lxRun ('(':xs)     = (TLParen:) <$> lxRun xs
 lxRun (')':xs)     = (TRParen:) <$> lxRun xs
-lxRun _            = Nothing
+
+lxRun ('/':xs)     = (TLamb:) <$> lxRun xs
+lxRun (',':xs)     = (TComma:) <$> lxRun xs
+lxRun ('.':xs)     = (TDot:) <$> lxRun xs
+
+lxRun c            = Err $ "Unknown token " ++ c
 
 
-lexDef :: String -> Maybe [Token]
-lexDef [] = Nothing
+lexDef :: String -> Evaluation [Token]
+lexDef [] = Err "Empty string on var name"
 lexDef xs = case span DT.isAlpha xs of
     ("true", r)  -> (TTrue:)      <$> lxRun r
     ("false", r) -> (TFalse:)     <$> lxRun r
     ("if", r)    -> (TIf:)        <$> lxRun r
     ("then", r)  -> (TThen:)      <$> lxRun r
     ("else", r)  -> (TElse:)      <$> lxRun r
+    ("let", r)   -> (TLet:)       <$> lxRun r
+    ("in", r)    -> (TIn:)        <$> lxRun r
     (var, r)     -> ((TDef var):) <$> lxRun r
 
-lexNumber :: String -> Maybe [Token]
-lexNumber [] = Nothing
+lexNumber :: String -> Evaluation [Token]
+lexNumber [] = Err "Empty string on number"
 lexNumber xs = let (digits, r) = span DT.isDigit xs
                in ((TNumber (read digits)):) <$> lxRun r
