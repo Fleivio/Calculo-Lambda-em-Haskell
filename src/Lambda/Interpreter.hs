@@ -1,4 +1,4 @@
-module Lambda.Evaluator(evalTerm, Term(..), termToInt, evalTS) where
+module Lambda.Interpreter(evalTerm, Term(..), termToInt, evalTS) where
 
 import Lambda.Lambda
 import Lambda.BaseTypes

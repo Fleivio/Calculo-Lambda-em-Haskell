@@ -10,6 +10,16 @@
   (major1) == 0 && (major2) <  1 || \
   (major1) == 0 && (major2) == 1 && (minor) <= 0)
 #endif /* MIN_VERSION_lambda */
+/* package array-0.5.4.0 */
+#ifndef VERSION_array
+#define VERSION_array "0.5.4.0"
+#endif /* VERSION_array */
+#ifndef MIN_VERSION_array
+#define MIN_VERSION_array(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  5 || \
+  (major1) == 0 && (major2) == 5 && (minor) <= 4)
+#endif /* MIN_VERSION_array */
 /* package base-4.16.4.0 */
 #ifndef VERSION_base
 #define VERSION_base "4.16.4.0"
@@ -153,7 +163,7 @@
 #endif /* MIN_TOOL_VERSION_strip */
 
 #ifndef CURRENT_COMPONENT_ID
-#define CURRENT_COMPONENT_ID "lambda-0.1.0.0-9Lf4DHwkakd5IoQjMv01nk-lambda-exe"
+#define CURRENT_COMPONENT_ID "lambda-0.1.0.0-Fyuvixda4NkIfzb36ooaQ2-lambda-exe"
 #endif /* CURRENT_COMPONENT_ID */
 #ifndef CURRENT_PACKAGE_VERSION
 #define CURRENT_PACKAGE_VERSION "0.1.0.0"

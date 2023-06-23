@@ -1,22 +1,28 @@
 /home/severino/.ghcup/ghc/9.2.8/lib/ghc-9.2.8/include/ghcversion.h:
   hash: 10980ec0f1a6f6f31856fe1e1a51a5359d97b178636eae9fb2348f20c650207a
 /home/severino/Desktop/lambda/.stack-work/dist/x86_64-linux/Cabal-3.6.3.0/build/autogen/Paths_lambda.hs:
-  hash: b97dde099f0b54b036e07b6db4c9633a4860a402476f9b83183b437761c59336
+  hash: 9a7b9cf206b0f3902b1de9f0a48fe956343f9ff6c35493756d3388a19b945315
 /home/severino/Desktop/lambda/.stack-work/dist/x86_64-linux/Cabal-3.6.3.0/build/autogen/cabal_macros.h:
-  hash: 523ee3f4a6b63bb0ee395d7e741776e695c0384e7b302441930a8b2826ecc435
+  hash: 91fc3dceafee7b0b5d778cec5bb8338bac9ade1607f90b1851ffa1976edfb77a
 /home/severino/Desktop/lambda/CHANGELOG.md:
   hash: 13937eda77427cecba740b5fa99b049efa7c4e7685633b228726697df55b8af2
 /home/severino/Desktop/lambda/README.md:
   hash: 06f4a13d7e506f10f742c8e750c9419c0167ff64521d35625527e5907ea4e42f
 /home/severino/Desktop/lambda/lambda.cabal:
-  hash: a88d4ec57a34c3cac70ee9a940d84a04f2f6ceadd5d09c78b6bdffc62d2f5d92
+  hash: 2a9606a392b9babf05135ce19cedc4fc762ae5ffabb2928e8c4ac60b506da10a
 /home/severino/Desktop/lambda/package.yaml:
-  hash: cea49163ed0a3e4ee49a5a17445ff36b96071fe6dffb7beffd726a05eaf7fd9c
+  hash: 11f1c8c5b368d3e46acd4099fafbc0ba69468b1779c8b438e96a13b1ba2c30b0
 /home/severino/Desktop/lambda/src/Lambda/BaseTypes.hs:
-  hash: e06c662439701ee426883f9c95bcddeffd8852912a0b7b0eaf4665e9c14276eb
-/home/severino/Desktop/lambda/src/Lambda/Evaluator.hs:
-  hash: bb5945780c9a2686b6b853257204f5a70ae54803ebd74a21dff02488c6530f5b
+  hash: b4e85d7c6e87813a3a9302cebc43d0b45ef55c11c23c6160a5454722d5164f3b
+/home/severino/Desktop/lambda/src/Lambda/Interpreter.hs:
+  hash: ae35562f43b7d102829f4e9aa5918e2c44fc8af5424c078fce34011e97f9374b
 /home/severino/Desktop/lambda/src/Lambda/Lambda.hs:
-  hash: 927efd9312f2b4475fe575e861101cccbf61e8dfbd8e3c83adb8b18d49d174bc
+  hash: c08991ad97d24640891240f661375d2bbc759d81b29a5862e6959aada91610d4
+/home/severino/Desktop/lambda/src/Lexer/Lexer.hs:
+  hash: 09160c2142bb2865124a97a505961d16464b477f8bfc7a98facea7cfeb4dda52
+/home/severino/Desktop/lambda/src/Lexer/Token.hs:
+  hash: b688edf9d96468ac6f8b822083dd3939c2565509a9a4adb3297c423c1a90d1cc
+/home/severino/Desktop/lambda/src/Parser.y:
+  hash: 2a6c5863b7a0daf006d6218c7a1177c51bb7843468f95c9a5e83ba8ff1835780
 /usr/include/stdc-predef.h:
   hash: cb08cd5d4cc059a90833ac48a284d25016e8d56ded8ad4cd98d8ac59cc5053f3

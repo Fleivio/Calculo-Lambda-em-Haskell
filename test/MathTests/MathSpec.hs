@@ -17,7 +17,8 @@ runMathTest (x, vt, y) = let x' = evalTerm x vt
                          in x' `shouldBe` y'
 
 myTests :: [MathTest]
-myTests = [( Op (Number 3) Eq (Number 2) , [], lFalse)]
+myTests = [( Op (Number 3) Eq (Number 2) , [], lFalse),
+        ( Op (Boolean False) Xor (Boolean True), [], Boolean True)]
 
 runMultipleTests :: [MathTest] -> IO ()
 runMultipleTests [] = return ()

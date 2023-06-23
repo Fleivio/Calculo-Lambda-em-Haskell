@@ -16,7 +16,9 @@ data Term =
     | If Term Term Term
     deriving (Eq)
 
-data Op = Add | Sub | Mul | Pow | And | Or | Xor | Eq | Diff
+data Op = Add | Sub | Mul | Pow |
+          And | Or | Xor |
+          Eq | Diff
     deriving Eq
 
 data UnOp = Not | Succ | Pred | IsZero

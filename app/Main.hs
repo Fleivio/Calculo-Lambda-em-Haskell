@@ -1,15 +1,14 @@
 module Main (main) where
 
+import Lexer.Lexer
+import Lambda.Interpreter
 import Lambda.Lambda
-import Lambda.Evaluator
-import Lambda.BaseTypes
+import Parser
 
-test :: Term
-test = Op (Boolean True) Xor (Boolean False)
-
-vart :: VarTable
-vart = [("if", Lam ["cond", "x", "y"] (App ( App ( App lIf (Def "cond") ) (Def "x") ) (Def "y"))),
-        ("test", Lam ["x"] (If (Op (Number 2) Eq (Number 2)) (Def "x") (Number 0)) )]
+vt = [("sum", Lam ["x"] (Op (Number 1) Add (Def "x")))]
 
 main :: IO ()
-main = (print test) >> print (evalTerm test vart)
+main = do
+    let tokens = lxRun  "sum1 2" 
+    if tokens == Nothing then putStrLn "Error" 
+    else print $ tokens >>= Just . parse >>= (\x -> Just $ evalTerm x vt)
