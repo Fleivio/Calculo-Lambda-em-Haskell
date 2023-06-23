@@ -143,10 +143,10 @@
 #endif /* MIN_TOOL_VERSION_strip */
 
 #ifndef CURRENT_PACKAGE_KEY
-#define CURRENT_PACKAGE_KEY "lambda-0.1.0.0-IeT8DKCDK2BVb67hEnTiC"
+#define CURRENT_PACKAGE_KEY "lambda-0.1.0.0-5qjh4utoxcXBqESBWqxyad"
 #endif /* CURRENT_packageKey */
 #ifndef CURRENT_COMPONENT_ID
-#define CURRENT_COMPONENT_ID "lambda-0.1.0.0-IeT8DKCDK2BVb67hEnTiC"
+#define CURRENT_COMPONENT_ID "lambda-0.1.0.0-5qjh4utoxcXBqESBWqxyad"
 #endif /* CURRENT_COMPONENT_ID */
 #ifndef CURRENT_PACKAGE_VERSION
 #define CURRENT_PACKAGE_VERSION "0.1.0.0"

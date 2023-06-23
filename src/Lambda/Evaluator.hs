@@ -20,6 +20,7 @@ opToTerm op a b = case op of
     Pow  -> appOpTerm lPow a b
     Or   -> appOpTerm lOr a b
     And  -> appOpTerm lAnd a b
+    Xor  -> App (App a (UnOp Not b)) b
     Eq   -> appOpTerm lEqual a b
     Diff -> UnOp Not (appOpTerm lEqual a b) 
 

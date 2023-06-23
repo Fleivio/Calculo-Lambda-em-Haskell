@@ -5,7 +5,7 @@ import Lambda.Evaluator
 import Lambda.BaseTypes
 
 test :: Term
-test = Op (Number 2) Eq (Number 1)
+test = Op (Boolean True) Xor (Boolean False)
 
 vart :: VarTable
 vart = [("if", Lam ["cond", "x", "y"] (App ( App ( App lIf (Def "cond") ) (Def "x") ) (Def "y"))),

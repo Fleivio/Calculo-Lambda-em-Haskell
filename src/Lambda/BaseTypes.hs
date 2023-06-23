@@ -2,7 +2,7 @@ module Lambda.BaseTypes (lFalse, lTrue, lAnd, lOr, lIf, lNot, lId,
                        lPair, lFst, lLst,
                        lIsZro, lEqual, lPred, lSucc,
                        lSum, lMult, lPow,  lSub, 
-                       lZero, lOne, lTwo, lThree
+                       lZero, lOne
                        ) where
 
 import Lambda.Lambda ( Term(..))
@@ -65,20 +65,6 @@ lOne :: Term
 lOne = Abs ( -- f
         Abs ( -- z
             App (Var 1) (Var 0)
-        )
-    )
-
-lTwo :: Term
-lTwo = Abs (
-        Abs (
-            App (Var 1) (App (Var 1) (Var 0))
-        )
-    )
-
-lThree :: Term
-lThree = Abs (
-        Abs (
-            App (Var 1) ( App (Var 1) (App (Var 1) (Var 0)))
         )
     )
 

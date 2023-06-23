@@ -1,15 +1,15 @@
 /home/severino/.ghcup/ghc/9.2.8/lib/ghc-9.2.8/include/ghcversion.h:
   hash: 10980ec0f1a6f6f31856fe1e1a51a5359d97b178636eae9fb2348f20c650207a
 /home/severino/Desktop/lambda/.stack-work/dist/x86_64-linux/Cabal-3.6.3.0/build/lambda-exe/autogen/Paths_lambda.hs:
-  hash: 881b8b5ccf1b6c407db0f62fb1433d595c0bf4cb3ed0b63754cb6f4d2f228ab3
+  hash: 6c1ee435458e5f27c3e8df475bac6add104c83b5312cccc996f82e9a16973608
 /home/severino/Desktop/lambda/.stack-work/dist/x86_64-linux/Cabal-3.6.3.0/build/lambda-exe/autogen/cabal_macros.h:
-  hash: 494c6e3ed7145c1c2a37ff77e9648a78ecc8f0e0e2c7cd466205cb4b8b7ee450
+  hash: 6aa10ae1b3c3eb975775baf340de56aa9e3861be854e8ad056785adc3a4f30f4
 /home/severino/Desktop/lambda/CHANGELOG.md:
   hash: 13937eda77427cecba740b5fa99b049efa7c4e7685633b228726697df55b8af2
 /home/severino/Desktop/lambda/README.md:
   hash: 06f4a13d7e506f10f742c8e750c9419c0167ff64521d35625527e5907ea4e42f
 /home/severino/Desktop/lambda/app/Main.hs:
-  hash: 79e4063be1eac3926a865137ddfe65933f86863ccc2fe257a48a4ff244febd7a
+  hash: 29be3f15e2e592d9c49572fa18f3dda126d74506e4e37b069ca98c6836835961
 /home/severino/Desktop/lambda/lambda.cabal:
   hash: a88d4ec57a34c3cac70ee9a940d84a04f2f6ceadd5d09c78b6bdffc62d2f5d92
 /home/severino/Desktop/lambda/package.yaml:

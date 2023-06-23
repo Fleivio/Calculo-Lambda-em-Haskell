@@ -16,7 +16,7 @@ data Term =
     | If Term Term Term
     deriving (Eq)
 
-data Op = Add | Sub | Mul | Pow | And | Or | Eq | Diff
+data Op = Add | Sub | Mul | Pow | And | Or | Xor | Eq | Diff
     deriving Eq
 
 data UnOp = Not | Succ | Pred | IsZero
@@ -45,6 +45,7 @@ instance Show Op where
         Pow -> "^"
         And -> "&&"
         Or  -> "||"
+        Xor -> "^^"
         Eq  -> "=="
         Diff-> "!="
 
