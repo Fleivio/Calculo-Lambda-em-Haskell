@@ -3,20 +3,20 @@
 /home/severino/Desktop/lambda/.stack-work/dist/x86_64-linux/Cabal-3.6.3.0/build/autogen/Paths_lambda.hs:
   hash: ed88425bf4546a5bfcd11da20631c7e2294a88cf14c63517a9aee004b36b25d3
 /home/severino/Desktop/lambda/.stack-work/dist/x86_64-linux/Cabal-3.6.3.0/build/autogen/cabal_macros.h:
-  hash: 523ee3f4a6b63bb0ee395d7e741776e695c0384e7b302441930a8b2826ecc435
+  hash: d7c24b4f8baceeddc9feb49ea69ac2ff7b46dae53404d1b869673ae5f2844c37
 /home/severino/Desktop/lambda/CHANGELOG.md:
   hash: 13937eda77427cecba740b5fa99b049efa7c4e7685633b228726697df55b8af2
 /home/severino/Desktop/lambda/README.md:
   hash: 06f4a13d7e506f10f742c8e750c9419c0167ff64521d35625527e5907ea4e42f
 /home/severino/Desktop/lambda/lambda.cabal:
-  hash: 7306f3a2c7ff219f21af75b50ddbf3e3601109f2e7ae30c36d18b1fbe3d3e5e2
+  hash: a88d4ec57a34c3cac70ee9a940d84a04f2f6ceadd5d09c78b6bdffc62d2f5d92
 /home/severino/Desktop/lambda/package.yaml:
-  hash: 11bb214224b0dcb619323f9826b16d33d3ceca70cffb83b3eb37bf6d0690e5a9
+  hash: cea49163ed0a3e4ee49a5a17445ff36b96071fe6dffb7beffd726a05eaf7fd9c
 /home/severino/Desktop/lambda/src/Lambda/BaseTypes.hs:
-  hash: 38e8751408975f3d5ff4d68e65a53446a892d9d975f820ed5ce5da53e5579da8
+  hash: e06c662439701ee426883f9c95bcddeffd8852912a0b7b0eaf4665e9c14276eb
 /home/severino/Desktop/lambda/src/Lambda/Evaluator.hs:
-  hash: 6a29540c45daa72a908c4fd8972755a118a839824cb9dbb4bd45e4a131afcd6b
+  hash: 0920b73bb739cac98688166aa9a7687656c210f864d3d78f832411e25368256c
 /home/severino/Desktop/lambda/src/Lambda/Lambda.hs:
-  hash: 0e2ebe4de04a4855d5f42d6945db04ed417ae635d3eb6cea4bae0cda9dac8d00
+  hash: 3b4d129a5e47e8f3e37a1ec92672171fa6cc76f37770c4b033a52f859c5163df
 /usr/include/stdc-predef.h:
   hash: cb08cd5d4cc059a90833ac48a284d25016e8d56ded8ad4cd98d8ac59cc5053f3

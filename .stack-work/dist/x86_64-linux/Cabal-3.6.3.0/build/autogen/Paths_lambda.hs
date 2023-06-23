@@ -43,7 +43,7 @@ getBinDir, getLibDir, getDynLibDir, getDataDir, getLibexecDir, getSysconfDir :: 
 
 bindir, libdir, dynlibdir, datadir, libexecdir, sysconfdir :: FilePath
 bindir     = "/home/severino/Desktop/lambda/.stack-work/install/x86_64-linux/da93ae21389e16ea1270574cd32ed2cd6fe96f556de3cf0c08125f197656560d/9.2.8/bin"
-libdir     = "/home/severino/Desktop/lambda/.stack-work/install/x86_64-linux/da93ae21389e16ea1270574cd32ed2cd6fe96f556de3cf0c08125f197656560d/9.2.8/lib/x86_64-linux-ghc-9.2.8/lambda-0.1.0.0-5qjh4utoxcXBqESBWqxyad"
+libdir     = "/home/severino/Desktop/lambda/.stack-work/install/x86_64-linux/da93ae21389e16ea1270574cd32ed2cd6fe96f556de3cf0c08125f197656560d/9.2.8/lib/x86_64-linux-ghc-9.2.8/lambda-0.1.0.0-IeT8DKCDK2BVb67hEnTiC"
 dynlibdir  = "/home/severino/Desktop/lambda/.stack-work/install/x86_64-linux/da93ae21389e16ea1270574cd32ed2cd6fe96f556de3cf0c08125f197656560d/9.2.8/lib/x86_64-linux-ghc-9.2.8"
 datadir    = "/home/severino/Desktop/lambda/.stack-work/install/x86_64-linux/da93ae21389e16ea1270574cd32ed2cd6fe96f556de3cf0c08125f197656560d/9.2.8/share/x86_64-linux-ghc-9.2.8/lambda-0.1.0.0"
 libexecdir = "/home/severino/Desktop/lambda/.stack-work/install/x86_64-linux/da93ae21389e16ea1270574cd32ed2cd6fe96f556de3cf0c08125f197656560d/9.2.8/libexec/x86_64-linux-ghc-9.2.8/lambda-0.1.0.0"

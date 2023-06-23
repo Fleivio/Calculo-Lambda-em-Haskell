@@ -157,8 +157,11 @@ lIsZro = Abs (
 
 
 lEqual :: Term
-lEqual = Abs (
+lEqual = 
+    Abs (
         Abs(
-            App lIsZro (App (App lSub (Var 0)) (Var 1))
+            (App (App lAnd
+                (App lIsZro (App (App lSub (Var 0)) (Var 1))))
+                (App lIsZro (App (App lSub (Var 1)) (Var 0))))
         )
     )
