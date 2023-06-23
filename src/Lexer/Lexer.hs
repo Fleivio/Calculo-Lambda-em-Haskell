@@ -42,6 +42,7 @@ lxRun (')':xs)     = (TRParen:) <$> lxRun xs
 lxRun ('/':xs)     = (TLamb:) <$> lxRun xs
 lxRun (',':xs)     = (TComma:) <$> lxRun xs
 lxRun ('.':xs)     = (TDot:) <$> lxRun xs
+lxRun (';':xs)     = (TIn:) <$> lxRun xs
 
 lxRun c            = Err $ "Unknown token " ++ c
 
@@ -55,7 +56,9 @@ lexDef xs = case span DT.isAlpha xs of
     ("then", r)  -> (TThen:)      <$> lxRun r
     ("else", r)  -> (TElse:)      <$> lxRun r
     ("let", r)   -> (TLet:)       <$> lxRun r
+    ("fn", r)    -> (TLet:)       <$> lxRun r
     ("in", r)    -> (TIn:)        <$> lxRun r
+
     (var, r)     -> ((TDef var):) <$> lxRun r
 
 lexNumber :: String -> Evaluation [Token]
