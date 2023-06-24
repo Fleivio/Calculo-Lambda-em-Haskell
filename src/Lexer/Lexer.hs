@@ -19,6 +19,8 @@ lxRun (x:xs) | DT.isDigit x = lexNumber (x:xs)
 lxRun (x:xs) | DT.isAlpha x = lexDef (x:xs)
 
 lxRun ('-':'>':xs) = (TDot:) <$> lxRun xs
+lxRun ('/':'/':xs) = lxRun r
+    where r = dropWhile (/= '\n') xs
 
 -- Arithmetic
 lxRun ('*':'*':xs) = (TPow:)  <$> lxRun xs
