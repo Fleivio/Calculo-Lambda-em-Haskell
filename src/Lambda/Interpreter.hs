@@ -27,7 +27,6 @@ evalRun (Number n)      _  = numToTerm n
 evalRun (Boolean b)     _  = boolToTerm b
 evalRun (Op t1 op t2)   vt = opToTerm op (evalTerm t1 vt) (evalTerm t2 vt)
 evalRun (UnOp op t1)    vt = unOpToTerm op (evalTerm t1 vt)
-evalRun (If cond a b)   vt = evalTerm (App ( App (App lIf (evalTerm cond vt)) a) b) vt
 evalRun (Let vt1 t)     vt = evalTerm t (vt1++vt)
 evalRun t _ = t
 
