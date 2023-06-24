@@ -27,6 +27,7 @@ library
   exposed-modules:
       Error.Evaluation
       Lambda.BaseTypes
+      Lambda.Converter
       Lambda.Interpreter
       Lambda.Lambda
       Lexer.Lexer

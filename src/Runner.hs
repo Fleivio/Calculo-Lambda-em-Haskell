@@ -1,4 +1,4 @@
-module Runner(run, runVt) where
+module Runner(run, runVt, runPrint) where
 
 import Lexer.Lexer
 import Parser.Parser
@@ -11,6 +11,16 @@ run x = do
     let term = parse tokens
         evaluated = evalTS term
     Ok . show $ evaluated
+
+runPrint :: String -> IO (Evaluation String)
+runPrint x = do
+    let tokens = lxRun x
+    print tokens
+    let term = tokens >>= pure . parse 
+    print term
+    let evaluated = term >>= return . evalTS
+    print evaluated
+    return $ Ok . show $ evaluated
 
 runVt :: String -> VarTable -> Evaluation String
 runVt x vt = do
