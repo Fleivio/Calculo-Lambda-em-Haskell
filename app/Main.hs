@@ -4,4 +4,4 @@ import Runner
 
 main = do
     s <- readFile "program.js"
-    runPrint s
+    print $ run s

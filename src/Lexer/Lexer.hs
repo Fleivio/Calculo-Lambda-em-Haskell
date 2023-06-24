@@ -10,6 +10,10 @@ ignore '\n' = True
 ignore '\t' = True
 ignore _    = False
 
+dropComment :: String -> String
+dropComment [] = []
+dropComment xs = dropWhile (/= '\n') xs 
+
 lxRun :: String -> Evaluation [Token]
 lxRun [] = Ok []
 lxRun (x:xs) | ignore x = lxRun xs
@@ -19,8 +23,6 @@ lxRun (x:xs) | DT.isDigit x = lexNumber (x:xs)
 lxRun (x:xs) | DT.isAlpha x = lexDef (x:xs)
 
 lxRun ('-':'>':xs) = (TDot:) <$> lxRun xs
-lxRun ('/':'/':xs) = lxRun r
-    where r = dropWhile (/= '\n') xs
 
 -- Arithmetic
 lxRun ('*':'*':xs) = (TPow:)  <$> lxRun xs
@@ -62,6 +64,7 @@ lexDef xs = case span DT.isAlpha xs of
     ("let", r)   -> (TLet:)       <$> lxRun r
     ("fn", r)    -> (TLet:)       <$> lxRun r
     ("in", r)    -> (TIn:)        <$> lxRun r
+    ("btw", r)   -> lxRun $ dropComment r
 
     (var, r)     -> ((TDef var):) <$> lxRun r
 
