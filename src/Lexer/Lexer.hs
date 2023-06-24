@@ -18,6 +18,8 @@ lxRun (x:xs) | ignore x = lxRun xs
 lxRun (x:xs) | DT.isDigit x = lexNumber (x:xs)
 lxRun (x:xs) | DT.isAlpha x = lexDef (x:xs)
 
+lxRun ('-':'>':xs) = (TDot:) <$> lxRun xs
+
 -- Arithmetic
 lxRun ('*':'*':xs) = (TPow:)  <$> lxRun xs
 lxRun ('+':'+':xs) = (TSucc:) <$> lxRun xs
