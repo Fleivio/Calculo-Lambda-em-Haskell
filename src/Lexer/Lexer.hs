@@ -22,7 +22,7 @@ lxRun (x:xs) | ignore x = lxRun xs
 lxRun (x:xs) | DT.isDigit x = lexNumber (x:xs)
 lxRun (x:xs) | DT.isAlpha x = lexDef (x:xs)
 
-lxRun ('-':'>':xs) = (TDot:) <$> lxRun xs
+lxRun ('-':'>':xs) = (TArrow:) <$> lxRun xs
 
 -- Arithmetic
 lxRun ('*':'*':xs) = (TPow:)  <$> lxRun xs
@@ -47,7 +47,6 @@ lxRun (')':xs)     = (TRParen:) <$> lxRun xs
 
 lxRun ('/':xs)     = (TLamb:) <$> lxRun xs
 lxRun (',':xs)     = (TComma:) <$> lxRun xs
-lxRun ('.':xs)     = (TDot:) <$> lxRun xs
 lxRun (';':xs)     = (TIn:) <$> lxRun xs
 
 lxRun c            = Err $ "Unknown token " ++ c

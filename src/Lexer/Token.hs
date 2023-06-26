@@ -15,7 +15,7 @@ data Token =
 
     | TLamb
     | TComma
-    | TDot
+    | TArrow
 
     | TTrue
     | TFalse

@@ -42,9 +42,12 @@ import Lambda.BaseTypes
     '('          { TLParen }
     ')'          { TRParen }
     ','          { TComma }
-    '.'          { TDot }
+    '->'          { TArrow }
 
     '/'          { TLamb }
+
+%left '||' '&&' '^' '!=' '==' '+' '-' '*' '**' '++' '--' '!' '='
+%right app
 %%
 
 Expr : var                         {Def $1}
@@ -65,9 +68,10 @@ Expr : var                         {Def $1}
      | if Expr then Expr else Expr {App (App (App lIf $2) $4) $6}
      | app                         { $1 }
      | let var '=' Expr in Expr    {Let [($2, $4)] $6}
-     | '!' Expr                    {UnOp Not $2}
+     | Expr '!'                    {UnOp Not $1}
      | '(' Expr ')'                { $2 }
-     | '/' args '.' Expr           {Lam $2 $4}
+     | '/' args '->' Expr                    {Lam $2 $4}
+     | let var '(' args ')' '->' Expr in Expr {Let [($2, Lam $4 $7)] $9}
 
 app : Expr Expr { App $1 $2 }
     | app Expr  {App $1 $2}
